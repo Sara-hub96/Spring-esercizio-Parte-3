@@ -1,14 +1,12 @@
 package co.develhope.springcalendar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@Table(name = "event")
 public class Events {
 
     @Id
@@ -16,7 +14,24 @@ public class Events {
     private long id;
     private String title;
     private LocalDateTime eventDate;
+    @ManyToMany
+    @JoinTable(
+            name = "events_partecipants",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<User> partecipants;
+    @ManyToOne
+    @JoinColumn(name = "calendar_id")
+    private Calendar calendar;
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
 
     public Events() {
     }
@@ -26,6 +41,14 @@ public class Events {
         this.eventDate = eventDate;
         this.partecipants = partecipants;
     }
+
+    // public Set<Events> getEvents() {
+    //     return events;
+    // }
+
+    // public void setEvents(Set<Events> events) {
+    //     this.events = events;
+    // }
 
     public String getTitle() {
         return title;
@@ -58,4 +81,12 @@ public class Events {
     public void setPartecipants(Set<User> partecipants) {
         this.partecipants = partecipants;
     }
+
+// public Calendar getCalendar() {
+//     return calendar;
+// }
+
+// public void setCalendar(Calendar calendar) {
+//     this.calendar = calendar;
+// }
 }

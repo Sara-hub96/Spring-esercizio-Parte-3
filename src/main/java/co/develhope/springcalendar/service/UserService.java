@@ -37,7 +37,7 @@ public class UserService {
         return userRepository.findById(id)
                 .map(user1 -> {
                     user1.setFullName(user.getFullName());
-                    user1.setEvents(user.getEvents());
+                 //   user1.setEvents(user.getEvents());
                     user1.setEmail(user.getEmail());
 
                     return userRepository.save(user1);

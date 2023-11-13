@@ -1,33 +1,52 @@
-package co.develhope.springcalendar.model;
+    package co.develhope.springcalendar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+    import jakarta.persistence.*;
 
-import java.util.Set;
+    import java.util.List;
+    import java.util.Set;
 
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String fullName;
-    private String email;
-    private Set<Events> events;
+    @Entity
+    @Table(name = "user")
+    public class User {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private long id;
+        private String fullName;
+        private String email;
+        @ManyToMany(mappedBy = "partecipants")
+        private Set<Events> events;
+        @ManyToOne
+        @JoinColumn(name = "calendar_id")
+        private Calendar calendar;
 
-    public User() {
-    }
+        public User() {
+        }
 
-    public User(long id, String fullName, String email, Set<Events> events) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.events = events;
-    }
+        public User(long id, String fullName, String email) {
+            this.id = id;
+            this.fullName = fullName;
+            this.email = email;
 
-    public long getId() {
+        }
+
+        public Set<Events> getEvents() {
+            return events;
+        }
+
+        public void setEvents(Set<Events> events) {
+            this.events = events;
+        }
+
+        public long getId() {
         return id;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
     }
 
     public void setId(long id) {
@@ -50,11 +69,19 @@ public class User {
         this.email = email;
     }
 
-    public Set<Events> getEvents() {
-        return events;
-    }
+   //public Set<Events> getEvents() {
+   //    return events;
+   //}
 
-    public void setEvents(Set<Events> events) {
-        this.events = events;
-    }
+   //public List<Calendar> getCalendars() {
+   //    return calendars;
+   //}
+
+   //public void setCalendars(List<Calendar> calendars) {
+   //    this.calendars = calendars;
+   //}
+
+   //public void setEvents(Set<Events> events) {
+   //    this.events = events;
+   //}
 }

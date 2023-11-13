@@ -1,29 +1,28 @@
 package co.develhope.springcalendar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
 @Entity
+@Table(name = "calendar")
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+
+    @OneToMany(mappedBy = "calendar")
     private Set<Events> events;
-    private User users;
 
     public Calendar() {
     }
 
-    public Calendar(long id, String name, Set<Events> events, User users) {
+    public Calendar(long id, String name, Set<Events> events) {
         this.id = id;
         this.name = name;
         this.events = events;
-        this.users = users;
+
     }
 
     public long getId() {
@@ -50,11 +49,11 @@ public class Calendar {
         this.events = events;
     }
 
-    public User getUsers() {
-        return users;
-    }
+  // public User getUser() {
+  //     return user;
+  // }
 
-    public void setUsers(User users) {
-        this.users = users;
-    }
+  // public void setUser(User user) {
+  //     this.user = user;
+  // }
 }

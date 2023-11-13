@@ -37,7 +37,7 @@ public class CalendarService {
         return calendarRepository.findById(id).map(calendar1 -> {
             calendar1.setName(calendar.getName());
             calendar1.setEvents(calendar.getEvents());
-            calendar1.setUsers(calendar.getUsers());
+          //  calendar1.setUser(calendar.getUser());
 
             return calendarRepository.save(calendar1);
         })
