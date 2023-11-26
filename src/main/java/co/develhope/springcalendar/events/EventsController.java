@@ -1,7 +1,7 @@
-package co.develhope.springcalendar.controller;
+package co.develhope.springcalendar.events;
 
-import co.develhope.springcalendar.model.Events;
-import co.develhope.springcalendar.service.EventsService;
+import co.develhope.springcalendar.events.Events;
+import co.develhope.springcalendar.events.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,10 +45,10 @@ public class EventsController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Events> updateOneEvent(@PathVariable long id, @RequestBody Events events) {
-        Events modifiedEvent = eventsService.updateEvents(id, events);
+        Optional<Events> modifiedEvent = eventsService.updateEvents(id, events);
         if (modifiedEvent == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(modifiedEvent);
+        return ResponseEntity.ok(modifiedEvent.get());
     }
 }

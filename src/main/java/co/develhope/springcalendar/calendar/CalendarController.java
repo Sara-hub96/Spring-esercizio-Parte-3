@@ -1,7 +1,5 @@
-package co.develhope.springcalendar.controller;
+package co.develhope.springcalendar.calendar;
 
-import co.develhope.springcalendar.model.Calendar;
-import co.develhope.springcalendar.service.CalendarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +42,10 @@ public class CalendarController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Calendar> updateOneCalendar(@PathVariable long id, @RequestBody Calendar calendar){
-        Calendar modifiedCalendar = calendarService.updateCalendar(id, calendar);
-        if (modifiedCalendar == null){
+        Optional<Calendar> modifiedCalendar = calendarService.updateCalendar(id, calendar);
+        if (modifiedCalendar.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(modifiedCalendar);
+        return ResponseEntity.ok(modifiedCalendar.get());
     }
 }

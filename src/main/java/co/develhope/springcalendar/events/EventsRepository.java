@@ -1,6 +1,6 @@
-package co.develhope.springcalendar.repository;
+package co.develhope.springcalendar.events;
 
-import co.develhope.springcalendar.model.Events;
+import co.develhope.springcalendar.events.Events;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

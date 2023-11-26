@@ -1,7 +1,5 @@
-package co.develhope.springcalendar.service;
+package co.develhope.springcalendar.events;
 
-import co.develhope.springcalendar.model.Events;
-import co.develhope.springcalendar.repository.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +31,7 @@ public class EventsService {
         return eventsRepository.findAll();
     }
 
-    public Events updateEvents(long id, Events events) {
+    public Optional<Events> updateEvents(long id, Events events) {
         return eventsRepository.findById(id)
                 .map(events1 -> {
                     events1.setTitle(events.getTitle());
@@ -41,7 +39,6 @@ public class EventsService {
                     events1.setEventDate(events.getEventDate());
 
                     return eventsRepository.save(events1);
-                })
-                .orElse(null);
+                });
     }
 }

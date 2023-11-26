@@ -1,7 +1,5 @@
-package co.develhope.springcalendar.service;
+package co.develhope.springcalendar.calendar;
 
-import co.develhope.springcalendar.model.Calendar;
-import co.develhope.springcalendar.repository.CalendarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +31,12 @@ public class CalendarService {
         return calendarRepository.findAll();
     }
 
-    public Calendar updateCalendar(long id, Calendar calendar) {
+    public Optional<Calendar> updateCalendar(long id, Calendar calendar) {
         return calendarRepository.findById(id).map(calendar1 -> {
             calendar1.setName(calendar.getName());
             calendar1.setEvents(calendar.getEvents());
-          //  calendar1.setUser(calendar.getUser());
 
             return calendarRepository.save(calendar1);
-        })
-        .orElse(null);
+        });
     }
 }

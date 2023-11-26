@@ -1,5 +1,6 @@
-package co.develhope.springcalendar.model;
+package co.develhope.springcalendar.calendar;
 
+import co.develhope.springcalendar.events.Events;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -22,7 +23,6 @@ public class Calendar {
         this.id = id;
         this.name = name;
         this.events = events;
-
     }
 
     public long getId() {
@@ -48,12 +48,4 @@ public class Calendar {
     public void setEvents(Set<Events> events) {
         this.events = events;
     }
-
-  // public User getUser() {
-  //     return user;
-  // }
-
-  // public void setUser(User user) {
-  //     this.user = user;
-  // }
 }

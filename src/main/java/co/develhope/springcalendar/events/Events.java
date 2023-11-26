@@ -1,5 +1,7 @@
-package co.develhope.springcalendar.model;
+package co.develhope.springcalendar.events;
 
+import co.develhope.springcalendar.calendar.Calendar;
+import co.develhope.springcalendar.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -42,14 +44,6 @@ public class Events {
         this.partecipants = partecipants;
     }
 
-    // public Set<Events> getEvents() {
-    //     return events;
-    // }
-
-    // public void setEvents(Set<Events> events) {
-    //     this.events = events;
-    // }
-
     public String getTitle() {
         return title;
     }
@@ -81,12 +75,4 @@ public class Events {
     public void setPartecipants(Set<User> partecipants) {
         this.partecipants = partecipants;
     }
-
-// public Calendar getCalendar() {
-//     return calendar;
-// }
-
-// public void setCalendar(Calendar calendar) {
-//     this.calendar = calendar;
-// }
 }

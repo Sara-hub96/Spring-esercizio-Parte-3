@@ -1,8 +1,9 @@
-    package co.develhope.springcalendar.model;
+    package co.develhope.springcalendar.user;
 
+    import co.develhope.springcalendar.calendar.Calendar;
+    import co.develhope.springcalendar.events.Events;
     import jakarta.persistence.*;
 
-    import java.util.List;
     import java.util.Set;
 
     @Entity
@@ -68,20 +69,4 @@
     public void setEmail(String email) {
         this.email = email;
     }
-
-   //public Set<Events> getEvents() {
-   //    return events;
-   //}
-
-   //public List<Calendar> getCalendars() {
-   //    return calendars;
-   //}
-
-   //public void setCalendars(List<Calendar> calendars) {
-   //    this.calendars = calendars;
-   //}
-
-   //public void setEvents(Set<Events> events) {
-   //    this.events = events;
-   //}
 }

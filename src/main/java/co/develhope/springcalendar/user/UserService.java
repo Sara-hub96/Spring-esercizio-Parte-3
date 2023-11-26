@@ -1,7 +1,7 @@
-package co.develhope.springcalendar.service;
+package co.develhope.springcalendar.user;
 
-import co.develhope.springcalendar.model.User;
-import co.develhope.springcalendar.repository.UserRepository;
+import co.develhope.springcalendar.user.User;
+import co.develhope.springcalendar.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,15 +33,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUser(long id, User user) {
+    public Optional<User> updateUser(long id, User user) {
         return userRepository.findById(id)
                 .map(user1 -> {
                     user1.setFullName(user.getFullName());
-                 //   user1.setEvents(user.getEvents());
                     user1.setEmail(user.getEmail());
 
                     return userRepository.save(user1);
-                })
-                .orElse(null);
+                });
     }
 }

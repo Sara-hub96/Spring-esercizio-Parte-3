@@ -1,7 +1,7 @@
-package co.develhope.springcalendar.controller;
+package co.develhope.springcalendar.user;
 
-import co.develhope.springcalendar.model.User;
-import co.develhope.springcalendar.service.UserService;
+import co.develhope.springcalendar.user.User;
+import co.develhope.springcalendar.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class UserController {
     @PostMapping
     public String createNewUser(@RequestBody User user) {
         userService.createUser(user);
-        return "A new event has been created!";
+        return "A new user has been created!";
     }
 
     @GetMapping
@@ -45,10 +45,10 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateOneUser(@PathVariable long id, @RequestBody User user) {
-        User modifiedUser = userService.updateUser(id, user);
+        Optional<User> modifiedUser = userService.updateUser(id, user);
         if (modifiedUser == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(modifiedUser);
+        return ResponseEntity.ok(modifiedUser.get());
     }
 }
