@@ -15,9 +15,9 @@ public class CalendarController {
     CalendarService calendarService;
 
     @PostMapping
-    public String createNewCalendar(@RequestBody Calendar calendar) {
+    public Calendar createNewCalendar(@RequestBody Calendar calendar) {
         calendarService.createCalendar(calendar);
-        return "A new calendar has been created!";
+        return calendar;
     }
 
     @GetMapping
@@ -36,8 +36,9 @@ public class CalendarController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOneCalendar(@PathVariable long id) {
+    public String deleteOneCalendar(@PathVariable long id) {
         calendarService.deleteCalendar(id);
+        return String.format("Calendar with id %d has been deleted!", id);
     }
 
     @PutMapping("/{id}")

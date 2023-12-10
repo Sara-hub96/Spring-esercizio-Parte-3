@@ -13,7 +13,7 @@ public class Calendar {
     private long id;
     private String name;
 
-    @OneToMany(mappedBy = "calendar")
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL)
     private Set<Events> events;
 
     public Calendar() {

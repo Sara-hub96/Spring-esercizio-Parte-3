@@ -16,7 +16,7 @@
         private String email;
         @ManyToMany(mappedBy = "partecipants")
         private Set<Events> events;
-        @ManyToOne
+        @ManyToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "calendar_id")
         private Calendar calendar;
 

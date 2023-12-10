@@ -18,9 +18,9 @@ public class EventsController {
     EventsService eventsService;
 
     @PostMapping
-    public String createNewEvent(@RequestBody Events events) {
+    public Events createNewEvent(@RequestBody Events events) {
         eventsService.createEvents(events);
-        return "A new event has been created!";
+        return events;
     }
 
     @GetMapping
@@ -39,8 +39,9 @@ public class EventsController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOneEvent(@PathVariable long id) {
+    public String deleteOneEvent(@PathVariable long id) {
         eventsService.deleteEvent(id);
+        return String.format("Event with id %d has been deleted!", id);
     }
 
     @PutMapping("/{id}")

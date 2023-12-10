@@ -1,5 +1,8 @@
 package co.develhope.springcalendar.events;
 
+import co.develhope.springcalendar.user.User;
+import co.develhope.springcalendar.user.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,8 @@ import java.util.Optional;
 public class EventsService {
     @Autowired
     EventsRepository eventsRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public EventsService(EventsRepository eventsRepository) {
         this.eventsRepository = eventsRepository;
@@ -36,9 +41,25 @@ public class EventsService {
                 .map(events1 -> {
                     events1.setTitle(events.getTitle());
                     events1.setPartecipants(events.getPartecipants());
-                    events1.setEventDate(events.getEventDate());
+                    events1.setEventDateStart(events.getEventDateStart());
+                    events1.setEventDateEnd(events.getEventDateEnd());
 
                     return eventsRepository.save(events1);
                 });
+    }
+
+    public void inviteUserToEvent(long eventId, long userId) {
+        Events event = eventsRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        try {
+            event.invitePartecipants(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        eventsRepository.save(event);
     }
 }

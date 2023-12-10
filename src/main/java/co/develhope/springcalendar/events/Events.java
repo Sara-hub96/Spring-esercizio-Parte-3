@@ -2,7 +2,10 @@ package co.develhope.springcalendar.events;
 
 import co.develhope.springcalendar.calendar.Calendar;
 import co.develhope.springcalendar.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -15,7 +18,13 @@ public class Events {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
-    private LocalDateTime eventDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime eventDateStart;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime eventDateEnd;
+    private Recurrence recurrence;
+    @JsonIgnore
+    private Integer recInterval;
     @ManyToMany
     @JoinTable(
             name = "events_partecipants",
@@ -38,9 +47,14 @@ public class Events {
     public Events() {
     }
 
-    public Events(String title, LocalDateTime eventDate, Set<User> partecipants) {
+    public Events(long id, String title, LocalDateTime eventDateStart, LocalDateTime eventDateEnd,
+                  Recurrence recurrence, Integer recInterval, Set<User> partecipants) {
+        this.id = id;
         this.title = title;
-        this.eventDate = eventDate;
+        this.eventDateStart = eventDateStart;
+        this.eventDateEnd = eventDateEnd;
+        this.recurrence = recurrence;
+        this.recInterval = recInterval;
         this.partecipants = partecipants;
     }
 
@@ -60,12 +74,36 @@ public class Events {
         this.id = id;
     }
 
-    public LocalDateTime getEventDate() {
-        return eventDate;
+    public LocalDateTime getEventDateStart() {
+        return eventDateStart;
     }
 
-    public void setEventDate(LocalDateTime eventDate) {
-        this.eventDate = eventDate;
+    public void setEventDateStart(LocalDateTime eventDateStart) {
+        this.eventDateStart = eventDateStart;
+    }
+
+    public LocalDateTime getEventDateEnd() {
+        return eventDateEnd;
+    }
+
+    public void setEventDateEnd(LocalDateTime eventDateEnd) {
+        this.eventDateEnd = eventDateEnd;
+    }
+
+    public Recurrence getRecurrence() {
+        return recurrence;
+    }
+
+    public void setRecurrence(Recurrence recurrence) {
+        this.recurrence = recurrence;
+    }
+
+    public int getRecInterval() {
+        return recInterval;
+    }
+
+    public void setInterval(int interval) {
+        this.recInterval = interval;
     }
 
     public Set<User> getPartecipants() {
@@ -74,5 +112,13 @@ public class Events {
 
     public void setPartecipants(Set<User> partecipants) {
         this.partecipants = partecipants;
+    }
+
+    public void invitePartecipants(User user) throws Exception {
+        if (partecipants.contains(user)) {
+            throw new Exception("User already invited");
+        }
+        partecipants.add(user);
+        user.getEvents().add(this);
     }
 }

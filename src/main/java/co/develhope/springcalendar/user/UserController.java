@@ -18,9 +18,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public String createNewUser(@RequestBody User user) {
+    public User createNewUser(@RequestBody User user) {
         userService.createUser(user);
-        return "A new user has been created!";
+        return user;
     }
 
     @GetMapping
@@ -39,8 +39,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOneEvent(@PathVariable long id) {
+    public String deleteOneEvent(@PathVariable long id) {
         userService.deleteUser(id);
+        return String.format("User with id %d has been deleted!", id);
     }
 
     @PutMapping("/{id}")
